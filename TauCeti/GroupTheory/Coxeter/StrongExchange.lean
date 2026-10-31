@@ -7,6 +7,7 @@ module
 
 public import Mathlib.Data.List.Chain
 public import Mathlib.GroupTheory.Coxeter.Inversion
+public import Mathlib.Tactic.Group
 public import TauCeti.GroupTheory.Coxeter.Basic
 
 /-!

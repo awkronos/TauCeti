@@ -5,8 +5,8 @@ Authors: The Tau Ceti contributors
 -/
 module
 
+public import TauCeti.Data.Int.CongrAllPrimes
 public import TauCeti.LinearAlgebra.IntegralLattice.Dual.Basic
-import TauCeti.Data.Int.CongrAllPrimes
 
 /-!
 # Finiteness of dual integral lattices

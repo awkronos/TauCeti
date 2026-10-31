@@ -159,8 +159,8 @@ noncomputable instance instModuleFreeRootCorootSpan (x : Weight K H L → L) :
   let _ : IsAddTorsionFree L := by
     constructor
     intro n hn a b hab
-    apply smul_right_injective L (Nat.cast_ne_zero.mpr hn : (n : K) ≠ 0)
-    simpa only [Nat.cast_smul_eq_nsmul] using hab
+    exact smul_right_injective L (Nat.cast_ne_zero.mpr hn : (n : K) ≠ 0)
+      (by simpa only [Nat.cast_smul_eq_nsmul] using hab)
   exact Module.free_of_finite_type_torsion_free'
 
 namespace IsChevalleySystem

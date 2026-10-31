@@ -6,6 +6,7 @@ Authors: The Tau Ceti contributors
 module
 
 public import Mathlib.Algebra.Lie.Classical
+public import Mathlib.Tactic.NoncommRing
 public import TauCeti.LinearAlgebra.SymplecticGroup
 
 /-!

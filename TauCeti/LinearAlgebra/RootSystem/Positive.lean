@@ -419,6 +419,15 @@ theorem eq_of_nsmul_root_sub_root_mem_posRootCone [Finite ι] [IsAddTorsionFree 
     [IsAddTorsionFree N] {i : ι} (hi : i ∈ b.support) {j : ι} (hj : j ∈ posRoots P b) {n : ℕ}
     (h : n • P.root i - P.root j ∈ posRootCone P b) : j = i := by
   classical
+  -- Mathlib 1f414401 states `RootPairing.Base.eq_one_or_neg_one_of_mem_support_of_smul_mem`
+  -- in terms of `HasUniqueDiv`; both modules here are commutative, so the torsion-free
+  -- hypotheses this theorem carries already give unique divisibility.
+  haveI : HasUniqueDiv M :=
+    ⟨fun {m} hm a b hab =>
+      IsAddTorsionFree.eq_of_nsmul_eq_nsmul_of_addCommute (M := M) hm (AddCommute.all a b) hab⟩
+  haveI : HasUniqueDiv N :=
+    ⟨fun {m} hm a b hab =>
+      IsAddTorsionFree.eq_of_nsmul_eq_nsmul_of_addCommute (M := N) hm (AddCommute.all a b) hab⟩
   obtain ⟨c, -, hc⟩ := exists_root_eq_sum_nat_of_mem_posRoots P b hj
   obtain ⟨d, hd⟩ := (mem_posRootCone P b).mp h
   set g : ι → R := fun k => (c k : R) + (d k : R) - (if k = i then (n : R) else 0) with hgdef
