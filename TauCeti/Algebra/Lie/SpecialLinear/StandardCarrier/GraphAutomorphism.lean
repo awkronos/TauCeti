@@ -727,7 +727,8 @@ theorem graphAutomorphism_hom_comp_self :
 
 /-- The inverse leg of the graph automorphism is its forward leg. -/
 @[simp]
-theorem graphAutomorphism_inv : (graphAutomorphism r).asIso.inv = (graphAutomorphism r).asIso.hom := by
+theorem graphAutomorphism_inv :
+    (graphAutomorphism r).asIso.inv = (graphAutomorphism r).asIso.hom := by
   calc
     (graphAutomorphism r).asIso.inv = 𝟙 (groupScheme r) ≫ (graphAutomorphism r).asIso.inv :=
       (Category.id_comp _).symm
