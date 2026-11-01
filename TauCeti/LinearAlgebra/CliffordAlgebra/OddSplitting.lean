@@ -420,9 +420,9 @@ theorem nonempty_algEquiv_even_prod_of_isSepClosed {K V : Type*} [Field K] [IsSe
     obtain ⟨v, hv, hv0⟩ := List.mem_map.mp hmem
     exact hQ v hv hv0
   have hcne : c ≠ 0 := mul_ne_zero (pow_ne_zero _ (neg_ne_zero.mpr one_ne_zero)) hprod
-  obtain ⟨s, hsz⟩ := IsSepClosed.exists_eq_mul_self (k := K) c⁻¹
+  obtain ⟨s, hsz⟩ := IsSepClosed.isSquare (k := K) c⁻¹
   exact ⟨equivEvenProdOfOddLength hl hlen hspan
-    (s := s) (by rw [← hsz, inv_mul_cancel₀ hcne])⟩
+    (s := s) (by rw [hsz, inv_mul_cancel₀ hcne])⟩
 
 /-- **A nondegenerate odd-dimensional Clifford algebra splits into two copies of its even
 subalgebra**, over a separably closed field of characteristic not two. An orthogonal basis of a

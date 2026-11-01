@@ -159,9 +159,10 @@ private theorem kostantGeneratedCoordinateNumberedSymmetryIso_hom_comp_rootMap
 /-- The automorphism of the generated Kostant group scheme induced by a numbered symmetry. -/
 noncomputable def kostantGeneratedNumberedSymmetryIso :
     Aut (kostantGeneratedGroupScheme e h ρ M hM hnil b) :=
-  (AlgebraicGeometry.hopfSpec (CommRingCat.of ℤ)).mapIso
-    (kostantGeneratedCoordinateNumberedSymmetryIso
-      e h ρ M hM hnil b σ θ hθM hθe hσ).op
+  Aut.of
+    ((AlgebraicGeometry.hopfSpec (CommRingCat.of ℤ)).mapIso
+      (kostantGeneratedCoordinateNumberedSymmetryIso
+        e h ρ M hM hnil b σ θ hθM hθe hσ).op)
 
 include hθe hσ in
 /-- The generated group-scheme symmetry carries the `i`th root subgroup to the one numbered
@@ -170,10 +171,11 @@ include hθe hσ in
 theorem kostantRootSubgroupToGenerated_comp_numberedSymmetryIso_hom (i : I) :
     kostantRootSubgroupToGenerated e h ρ M hM hnil b i ≫
         (kostantGeneratedNumberedSymmetryIso
-          e h ρ M hM hnil b σ θ hθM hθe hσ).hom =
+          e h ρ M hM hnil b σ θ hθM hθe hσ).asIso.hom =
       kostantRootSubgroupToGenerated e h ρ M hM hnil b (σ i) := by
-  rw [kostantRootSubgroupToGenerated_def, kostantGeneratedNumberedSymmetryIso,
-    Functor.mapIso_hom, Iso.op_hom, Category.assoc, ← Functor.map_comp, ← op_comp,
+  rw [kostantRootSubgroupToGenerated_def, kostantGeneratedNumberedSymmetryIso]
+  dsimp only
+  rw [Functor.mapIso_hom, Iso.op_hom, Category.assoc, ← Functor.map_comp, ← op_comp,
     kostantGeneratedCoordinateNumberedSymmetryIso_hom_comp_rootMap]
   exact (kostantRootSubgroupToGenerated_def
     e h ρ M hM hnil b (σ i)).symm
@@ -185,13 +187,13 @@ include hθe hσ in
 theorem kostantRootSubgroupToGenerated_comp_numberedSymmetryIso_inv (i : I) :
     kostantRootSubgroupToGenerated e h ρ M hM hnil b (σ i) ≫
         (kostantGeneratedNumberedSymmetryIso
-          e h ρ M hM hnil b σ θ hθM hθe hσ).inv =
+          e h ρ M hM hnil b σ θ hθM hθe hσ).asIso.inv =
       kostantRootSubgroupToGenerated e h ρ M hM hnil b i := by
   rw [← kostantRootSubgroupToGenerated_comp_numberedSymmetryIso_hom
     e h ρ M hM hnil b σ θ hθM hθe hσ i]
   rw [Category.assoc,
     (kostantGeneratedNumberedSymmetryIso
-      e h ρ M hM hnil b σ θ hθM hθe hσ).hom_inv_id,
+      e h ρ M hM hnil b σ θ hθM hθe hσ).asIso.hom_inv_id,
     Category.comp_id]
 
 include hθe hσ in
@@ -201,7 +203,7 @@ subgroup numbered by the corresponding iterate of `σ`. -/
 theorem kostantRootSubgroupToGenerated_comp_numberedSymmetryIso_pow_hom (m : ℕ) (i : I) :
     kostantRootSubgroupToGenerated e h ρ M hM hnil b i ≫
         ((kostantGeneratedNumberedSymmetryIso
-          e h ρ M hM hnil b σ θ hθM hθe hσ) ^ m).hom =
+          e h ρ M hM hnil b σ θ hθM hθe hσ) ^ m).asIso.hom =
       kostantRootSubgroupToGenerated e h ρ M hM hnil b ((σ^[m]) i) := by
   exact TauCeti.CategoryTheory.comp_aut_pow_hom_of_comp
     (kostantGeneratedNumberedSymmetryIso
@@ -218,12 +220,13 @@ theorem kostantGeneratedNumberedSymmetryIso_pow_eq_one (m : ℕ)
     (hσm : σ^[m] = id) :
     (kostantGeneratedNumberedSymmetryIso
       e h ρ M hM hnil b σ θ hθM hθe hσ) ^ m = 1 := by
+  apply Aut.ext
   apply Iso.ext
   apply kostantGeneratedGroupScheme_hom_ext e h ρ M hM hnil b
   intro i
   rw [kostantRootSubgroupToGenerated_comp_numberedSymmetryIso_pow_hom, hσm, id_eq]
-  -- The right-hand identity is an `Aut`, whose hom is definitionally that of `Iso.refl`;
-  -- `change` exposes it because keyed rewriting does not unfold the plain definition `Aut`.
+  -- The right-hand identity is an `Aut`, whose `asIso` is definitionally `Iso.refl`;
+  -- `change` exposes it because keyed rewriting does not unfold the projection.
   change _ = _ ≫ (Iso.refl _).hom
   rw [Iso.refl_hom, Category.comp_id]
 
