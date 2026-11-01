@@ -329,7 +329,8 @@ theorem kostantRootSubgroupToToral_comp_numberedSymmetryIso_inv (i : I) :
   rw [← kostantRootSubgroupToToral_comp_numberedSymmetryIso_hom
     e h ρ M hM hnil b wt σ θ hθM hθe hσ basisPerm basisScale hbasis torusPerm hwt i,
     Category.assoc, (kostantToralNumberedSymmetryIso
-      e h ρ M hM hnil b wt σ θ hθM hθe hσ basisPerm basisScale hbasis torusPerm hwt).asIso.hom_inv_id,
+      e h ρ M hM hnil b wt σ θ hθM hθe hσ basisPerm basisScale hbasis torusPerm
+        hwt).asIso.hom_inv_id,
     Category.comp_id]
 
 include hθe hσ hbasis hwt in
@@ -406,7 +407,8 @@ the corresponding iterate of `σ`. -/
 theorem kostantRootSubgroupToToral_comp_numberedSymmetryIso_pow_hom (m : ℕ) (i : I) :
     kostantRootSubgroupToToral e h ρ M hM hnil b wt i ≫
         ((kostantToralNumberedSymmetryIso
-          e h ρ M hM hnil b wt σ θ hθM hθe hσ basisPerm basisScale hbasis torusPerm hwt) ^ m).asIso.hom =
+          e h ρ M hM hnil b wt σ θ hθM hθe hσ basisPerm basisScale hbasis torusPerm
+            hwt) ^ m).asIso.hom =
       kostantRootSubgroupToToral e h ρ M hM hnil b wt ((σ^[m]) i) := by
   exact TauCeti.CategoryTheory.comp_aut_pow_hom_of_comp
     (kostantToralNumberedSymmetryIso
@@ -422,7 +424,8 @@ relabelling. -/
 theorem kostantWeightTorusToToral_comp_numberedSymmetryIso_pow_hom (m : ℕ) :
     kostantWeightTorusToToral e h ρ M hM hnil b wt ≫
         ((kostantToralNumberedSymmetryIso
-          e h ρ M hM hnil b wt σ θ hθM hθe hσ basisPerm basisScale hbasis torusPerm hwt) ^ m).asIso.hom =
+          e h ρ M hM hnil b wt σ θ hθM hθe hσ basisPerm basisScale hbasis torusPerm
+            hwt) ^ m).asIso.hom =
       SplitTorus.relabel ℤ (torusPerm⁻¹ ^ m) ≫
         kostantWeightTorusToToral e h ρ M hM hnil b wt := by
   let γ := kostantToralNumberedSymmetryIso
