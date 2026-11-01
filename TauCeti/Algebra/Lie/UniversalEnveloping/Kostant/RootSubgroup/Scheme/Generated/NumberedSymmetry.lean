@@ -159,9 +159,10 @@ private theorem kostantGeneratedCoordinateNumberedSymmetryIso_hom_comp_rootMap
 /-- The automorphism of the generated Kostant group scheme induced by a numbered symmetry. -/
 noncomputable def kostantGeneratedNumberedSymmetryIso :
     Aut (kostantGeneratedGroupScheme e h ρ M hM hnil b) :=
-  Aut.of <| (AlgebraicGeometry.hopfSpec (CommRingCat.of ℤ)).mapIso
-    (kostantGeneratedCoordinateNumberedSymmetryIso
-      e h ρ M hM hnil b σ θ hθM hθe hσ).op
+  Aut.of
+    ((AlgebraicGeometry.hopfSpec (CommRingCat.of ℤ)).mapIso
+      (kostantGeneratedCoordinateNumberedSymmetryIso
+        e h ρ M hM hnil b σ θ hθM hθe hσ).op)
 
 include hθe hσ in
 /-- The generated group-scheme symmetry carries the `i`th root subgroup to the one numbered
@@ -172,8 +173,9 @@ theorem kostantRootSubgroupToGenerated_comp_numberedSymmetryIso_hom (i : I) :
         (kostantGeneratedNumberedSymmetryIso
           e h ρ M hM hnil b σ θ hθM hθe hσ).asIso.hom =
       kostantRootSubgroupToGenerated e h ρ M hM hnil b (σ i) := by
-  rw [kostantRootSubgroupToGenerated_def, kostantGeneratedNumberedSymmetryIso,
-    Functor.mapIso_hom, Iso.op_hom, Category.assoc, ← Functor.map_comp, ← op_comp,
+  rw [kostantRootSubgroupToGenerated_def, kostantGeneratedNumberedSymmetryIso]
+  dsimp only
+  rw [Functor.mapIso_hom, Iso.op_hom, Category.assoc, ← Functor.map_comp, ← op_comp,
     kostantGeneratedCoordinateNumberedSymmetryIso_hom_comp_rootMap]
   exact (kostantRootSubgroupToGenerated_def
     e h ρ M hM hnil b (σ i)).symm
@@ -222,7 +224,10 @@ theorem kostantGeneratedNumberedSymmetryIso_pow_eq_one (m : ℕ)
   apply Iso.ext
   apply kostantGeneratedGroupScheme_hom_ext e h ρ M hM hnil b
   intro i
-  rw [kostantRootSubgroupToGenerated_comp_numberedSymmetryIso_pow_hom, hσm, id_eq,
-    Aut.one_asIso, Iso.refl_hom, Category.comp_id]
+  rw [kostantRootSubgroupToGenerated_comp_numberedSymmetryIso_pow_hom, hσm, id_eq]
+  -- The right-hand identity is an `Aut`, whose `asIso` is definitionally `Iso.refl`;
+  -- `change` exposes it because keyed rewriting does not unfold the projection.
+  change _ = _ ≫ (Iso.refl _).hom
+  rw [Iso.refl_hom, Category.comp_id]
 
 end TauCeti.UniversalEnvelopingAlgebra

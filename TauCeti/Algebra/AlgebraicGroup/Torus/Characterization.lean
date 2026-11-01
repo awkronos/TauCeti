@@ -47,10 +47,11 @@ universe u
 private theorem exists_mulEquiv_finsupp_int
     (G : Type u) [CommGroup G] [Group.FG G] [IsMulTorsionFree G] :
     ∃ n : ℕ, Nonempty (G ≃* Multiplicative (Fin n →₀ ℤ)) := by
-  have : HasUniqueRoots G :=
-    ⟨fun _ hn _ _ h ↦ eq_of_pow_eq_pow_of_commute hn (Commute.all _ _) h⟩
   let _ : Module.Finite ℤ (Additive G) :=
     Module.Finite.iff_addGroup_fg.mpr (inferInstance : AddGroup.FG (Additive G))
+  haveI : HasUniqueDiv (Additive G) :=
+    ⟨fun n hn => fun a b hab =>
+      eq_of_nsmul_eq_nsmul_of_addCommute (M := Additive G) hn (add_comm a b) hab⟩
   let _ : Module.IsTorsionFree ℤ (Additive G) := inferInstance
   let _ : Module.Free ℤ (Additive G) := Module.free_of_finite_type_torsion_free'
   let b := Module.Free.chooseBasis ℤ (Additive G)

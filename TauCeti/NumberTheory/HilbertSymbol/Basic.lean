@@ -6,6 +6,7 @@ Authors: The Tau Ceti contributors
 module
 
 public import TauCeti.Algebra.Quaternion.SplittingCriterion
+import Mathlib.Tactic.LinearCombination
 public import TauCeti.FieldTheory.SquareClassGroup.Basic
 
 /-!

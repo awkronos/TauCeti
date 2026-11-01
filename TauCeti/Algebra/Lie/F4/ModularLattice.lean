@@ -7,6 +7,7 @@ module
 
 public import TauCeti.Algebra.Lie.Derivation.IntegralExp
 public import Mathlib.Algebra.Lie.BaseChange
+public import Mathlib.Algebra.Lie.AdjointAction.Derivation
 public import TauCeti.Algebra.Lie.F4.ChevalleyAction
 public import TauCeti.Algebra.Lie.Weights.Root.IntegralBasis
 

@@ -430,11 +430,8 @@ private theorem graphCoordinateIso_hom_comp_torusMap :
 
 /-- **The pinned graph automorphism of the full-weight type-`A_r` standard carrier.** -/
 noncomputable def graphAutomorphism : Aut (groupScheme r) :=
-  .of ((AlgebraicGeometry.hopfSpec (CommRingCat.of ℤ)).mapIso (graphCoordinateIso r).op)
-
-private theorem graphAutomorphism_asIso :
-    (graphAutomorphism r).asIso =
-      (AlgebraicGeometry.hopfSpec (CommRingCat.of ℤ)).mapIso (graphCoordinateIso r).op := rfl
+  Aut.of
+    ((AlgebraicGeometry.hopfSpec (CommRingCat.of ℤ)).mapIso (graphCoordinateIso r).op)
 
 /-- The standard carrier is represented by its quotient coordinate Hopf algebra. -/
 private theorem groupScheme_eq_hopfSpec :
@@ -469,7 +466,9 @@ private theorem groupSchemePointMulEquiv_comp_graphAutomorphism
       groupSchemePointMulEquiv r A
         ((CommHopfAlgCat.mapPointsFunctor (graphCoordinateIso r).hom).app
           (CommAlgCat.of ℤ A) q) := by
-  rw [graphAutomorphism_asIso, Functor.mapIso_hom, Iso.op_hom]
+  rw [graphAutomorphism]
+  dsimp only
+  rw [Functor.mapIso_hom, Iso.op_hom]
   exact CommHopfAlgCat.pointMulEquivOfPresentation_mapDomain
     (R := ℤ) A (groupScheme_eq_hopfSpec r) (groupScheme_eq_hopfSpec r)
       (groupSchemePointMulEquiv r A) (groupSchemePointMulEquiv r A)
@@ -641,8 +640,9 @@ root subgroup, without changing its additive parameter. -/
 theorem rootSubgroup_comp_graphAutomorphism_hom (k : Fin r ⊕ Fin r) :
     rootSubgroup r k ≫ (graphAutomorphism r).asIso.hom =
       rootSubgroup r (graphRootPerm r k) := by
-  rw [rootSubgroup_def, kostantRootSubgroupToToral_def, graphAutomorphism_asIso,
-    Functor.mapIso_hom, Iso.op_hom, Category.assoc,
+  rw [rootSubgroup_def, kostantRootSubgroupToToral_def, graphAutomorphism]
+  dsimp only
+  rw [Functor.mapIso_hom, Iso.op_hom, Category.assoc,
     ← Functor.map_comp, ← op_comp, graphCoordinateIso_hom_comp_rootMap]
   rw [rootSubgroup_def]
   exact (TauCeti.UniversalEnvelopingAlgebra.kostantRootSubgroupToToral_def
@@ -675,8 +675,9 @@ coordinates. -/
 theorem weightTorus_comp_graphAutomorphism_hom :
     weightTorus r ≫ (graphAutomorphism r).asIso.hom =
       SplitTorus.relabel ℤ Fin.revPerm ≫ weightTorus r := by
-  rw [weightTorus_def, kostantWeightTorusToToral_def, graphAutomorphism_asIso,
-    Functor.mapIso_hom, Iso.op_hom, Category.assoc,
+  rw [weightTorus_def, kostantWeightTorusToToral_def, graphAutomorphism]
+  dsimp only
+  rw [Functor.mapIso_hom, Iso.op_hom, Category.assoc,
     ← Functor.map_comp, ← op_comp, graphCoordinateIso_hom_comp_torusMap, op_comp,
     Functor.map_comp, SplitTorus.relabel_def]
   simp only [Category.assoc, eqToHom_trans_assoc, eqToHom_refl, Category.id_comp]
@@ -727,7 +728,8 @@ theorem graphAutomorphism_hom_comp_self :
 
 /-- The inverse leg of the graph automorphism is its forward leg. -/
 @[simp]
-theorem graphAutomorphism_inv : (graphAutomorphism r).asIso.inv = (graphAutomorphism r).asIso.hom := by
+theorem graphAutomorphism_inv :
+    (graphAutomorphism r).asIso.inv = (graphAutomorphism r).asIso.hom := by
   calc
     (graphAutomorphism r).asIso.inv = 𝟙 (groupScheme r) ≫ (graphAutomorphism r).asIso.inv :=
       (Category.id_comp _).symm
