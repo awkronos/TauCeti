@@ -422,10 +422,10 @@ theorem eq_of_nsmul_root_sub_root_mem_posRootCone [Finite ι] [IsAddTorsionFree 
   -- Mathlib 1f414401 states `RootPairing.Base.eq_one_or_neg_one_of_mem_support_of_smul_mem`
   -- in terms of `HasUniqueDiv`; both modules here are commutative, so the torsion-free
   -- hypotheses this theorem carries already give unique divisibility.
-  haveI : HasUniqueDiv M :=
+  have : HasUniqueDiv M :=
     ⟨fun {m} hm a b hab =>
       IsAddTorsionFree.eq_of_nsmul_eq_nsmul_of_addCommute (M := M) hm (AddCommute.all a b) hab⟩
-  haveI : HasUniqueDiv N :=
+  have : HasUniqueDiv N :=
     ⟨fun {m} hm a b hab =>
       IsAddTorsionFree.eq_of_nsmul_eq_nsmul_of_addCommute (M := N) hm (AddCommute.all a b) hab⟩
   obtain ⟨c, -, hc⟩ := exists_root_eq_sum_nat_of_mem_posRoots P b hj
