@@ -7,6 +7,7 @@ module
 
 public import TauCeti.Data.Int.CongrAllPrimes
 public import TauCeti.LinearAlgebra.IntegralLattice.Dual.Basic
+public import Mathlib.LinearAlgebra.FreeModule.PID
 
 /-!
 # Finiteness of dual integral lattices

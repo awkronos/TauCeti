@@ -6,6 +6,7 @@ Authors: The Tau Ceti contributors
 module
 
 public import Mathlib.Data.List.Chain
+public import Mathlib.Data.List.GetD
 public import Mathlib.GroupTheory.Coxeter.Inversion
 public import Mathlib.Tactic.Group
 public import TauCeti.GroupTheory.Coxeter.Basic

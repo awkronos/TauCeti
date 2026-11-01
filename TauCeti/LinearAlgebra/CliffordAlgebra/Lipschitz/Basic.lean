@@ -7,6 +7,7 @@ module
 
 public import TauCeti.LinearAlgebra.CliffordAlgebra.Vectors
 public import Mathlib.LinearAlgebra.CliffordAlgebra.SpinGroup
+public import Mathlib.LinearAlgebra.CliffordAlgebra.Inversion
 
 /-!
 # Vector generators of the Lipschitz group
