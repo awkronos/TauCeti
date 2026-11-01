@@ -148,7 +148,7 @@ theorem _root_.Representation.exists_common_fixed_vector_of_baseChange
     calc
       descend (f.baseChange L x) =
           TensorProduct.lid K V ((phi.rTensor V) ((f.lTensor L) x)) := by
-        rw [LinearMap.baseChange_eq_ltensor]
+        rw [LinearMap.baseChange_eq_lTensor]
         rfl
       _ = TensorProduct.lid K V ((f.lTensor K) ((phi.rTensor V) x)) := by
         apply congrArg (TensorProduct.lid K V)

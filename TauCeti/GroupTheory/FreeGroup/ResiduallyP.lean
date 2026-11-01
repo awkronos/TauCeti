@@ -10,6 +10,7 @@ public import TauCeti.LinearAlgebra.Matrix.UnitriangularP
 public import TauCeti.NumberTheory.Binomial.PadicVal
 public import Mathlib.GroupTheory.ResiduallyFinite
 
+import Mathlib.Data.Nat.Choose.Sum
 /-!
 # Free groups are residually `p`
 

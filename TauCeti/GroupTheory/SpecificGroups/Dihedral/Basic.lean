@@ -331,7 +331,8 @@ theorem dihedralReflectionParity_sr (i : ZMod n) :
 theorem dihedralReflectionParity_surjective (n : ℕ) :
     Function.Surjective (dihedralReflectionParity n) := by
   intro y
-  fin_cases y
+  obtain ⟨x, rfl⟩ : ∃ x : ZMod 2, Multiplicative.ofAdd x = y := ⟨y, rfl⟩
+  fin_cases x
   exacts [⟨DihedralGroup.r 0, rfl⟩, ⟨DihedralGroup.sr 0, rfl⟩]
 
 /-- The **rotation subgroup** of `DihedralGroup n`, the kernel of the reflection parity. It is
@@ -373,7 +374,8 @@ theorem sr_notMem_dihedralRotations (i : ZMod n) :
 theorem index_dihedralRotations (n : ℕ) : (dihedralRotations n).index = 2 := by
   rw [dihedralRotations, Subgroup.index_ker,
     MonoidHom.range_eq_top.mpr (dihedralReflectionParity_surjective n)]
-  simp
+  exact Subgroup.card_top.trans
+    ((Nat.card_congr Multiplicative.ofAdd).symm.trans (Nat.card_zmod 2))
 
 /-- The rotation subgroup has finite index, for every `n` -- including `n = 0`, where
 `DihedralGroup n` is infinite. -/

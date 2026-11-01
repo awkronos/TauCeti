@@ -6,6 +6,8 @@ Authors: The Tau Ceti contributors
 module
 
 public import Mathlib.GroupTheory.GroupAction.Primitive
+
+import Mathlib.GroupTheory.GroupAction.Transitive
 public import Mathlib.GroupTheory.SpecificGroups.Alternating
 
 /-!
