@@ -146,7 +146,8 @@ noncomputable def trialityAutomorphism : Aut groupScheme :=
 by triality, without changing its additive parameter: `γ ∘ x_k = x_{σ k}`. -/
 @[reassoc (attr := simp)]
 theorem rootSubgroup_comp_trialityAutomorphism_hom (k : Fin 4 ⊕ Fin 4) :
-    rootSubgroup k ≫ trialityAutomorphism.hom = rootSubgroup (trialitySymmetry.rootPerm k) := by
+    rootSubgroup k ≫ trialityAutomorphism.asIso.hom =
+      rootSubgroup (trialitySymmetry.rootPerm k) := by
   rw [rootSubgroup_def, trialityAutomorphism, toralTrialityAutomorphism,
     kostantRootSubgroupToToral_comp_numberedSymmetryIso_hom]
   exact (rootSubgroup_def (trialitySymmetry.rootPerm k)).symm
@@ -158,22 +159,23 @@ the carrier, so these equations leave nothing free; in particular no condition o
 weight torus is needed. -/
 theorem eq_trialityAutomorphism_hom_of_rootSubgroup (φ : groupScheme ⟶ groupScheme)
     (hroot : ∀ k, rootSubgroup k ≫ φ = rootSubgroup (trialitySymmetry.rootPerm k)) :
-    φ = trialityAutomorphism.hom :=
+    φ = trialityAutomorphism.asIso.hom :=
   groupScheme_hom_ext_of_rootSubgroup φ _ fun k => by
     rw [hroot k, rootSubgroup_comp_trialityAutomorphism_hom]
 
 /-- **The triality automorphism is the unique automorphism of the carrier realizing the
 three-cycle of the outer `D₄` nodes on the numbered simple-root subgroups.** -/
 theorem eq_trialityAutomorphism_of_rootSubgroup (γ : Aut groupScheme)
-    (hroot : ∀ k, rootSubgroup k ≫ γ.hom = rootSubgroup (trialitySymmetry.rootPerm k)) :
+    (hroot : ∀ k, rootSubgroup k ≫ γ.asIso.hom =
+      rootSubgroup (trialitySymmetry.rootPerm k)) :
     γ = trialityAutomorphism :=
-  Iso.ext (eq_trialityAutomorphism_hom_of_rootSubgroup γ.hom hroot)
+  Aut.ext (Iso.ext (eq_trialityAutomorphism_hom_of_rootSubgroup γ.asIso.hom hroot))
 
 /-- The triality automorphism relabels the represented split weight torus by the inverse of the
 diagram permutation. -/
 @[reassoc (attr := simp)]
 theorem weightTorus_comp_trialityAutomorphism_hom :
-    weightTorus ≫ trialityAutomorphism.hom =
+    weightTorus ≫ trialityAutomorphism.asIso.hom =
       SplitTorus.relabel ℤ trialityPermD4⁻¹ ≫ weightTorus := by
   rw [weightTorus_def, trialityAutomorphism, toralTrialityAutomorphism,
     kostantWeightTorusToToral_comp_numberedSymmetryIso_hom]
@@ -191,25 +193,33 @@ theorem trialityAutomorphism_pow_three : trialityAutomorphism ^ 3 = 1 := by
 /-- Applying the triality automorphism three times is the identity on the tripled carrier. -/
 @[reassoc (attr := simp)]
 theorem trialityAutomorphism_hom_comp_self_comp_self :
-    trialityAutomorphism.hom ≫ trialityAutomorphism.hom ≫ trialityAutomorphism.hom =
+    trialityAutomorphism.asIso.hom ≫ trialityAutomorphism.asIso.hom ≫
+        trialityAutomorphism.asIso.hom =
       𝟙 groupScheme := by
   calc
-    trialityAutomorphism.hom ≫ trialityAutomorphism.hom ≫ trialityAutomorphism.hom =
-        trialityAutomorphism.hom ≫ (trialityAutomorphism.trans trialityAutomorphism).hom :=
-      congrArg (trialityAutomorphism.hom ≫ ·) (Iso.trans_hom _ _).symm
-    _ = (trialityAutomorphism.trans (trialityAutomorphism.trans trialityAutomorphism)).hom :=
+    trialityAutomorphism.asIso.hom ≫ trialityAutomorphism.asIso.hom ≫
+        trialityAutomorphism.asIso.hom =
+      trialityAutomorphism.asIso.hom ≫
+        (trialityAutomorphism.asIso.trans trialityAutomorphism.asIso).hom :=
+      congrArg (trialityAutomorphism.asIso.hom ≫ ·) (Iso.trans_hom _ _).symm
+    _ =
+        (trialityAutomorphism.asIso.trans
+          (trialityAutomorphism.asIso.trans trialityAutomorphism.asIso)).hom :=
       (Iso.trans_hom _ _).symm
-    _ = (trialityAutomorphism * trialityAutomorphism * trialityAutomorphism).hom := by
-      rw [Aut.Aut_mul_def, Aut.Aut_mul_def]
-    _ = (trialityAutomorphism ^ 3).hom := by rw [pow_three']
-    _ = (1 : Aut groupScheme).hom := by rw [trialityAutomorphism_pow_three]
-    _ = 𝟙 groupScheme := Iso.refl_hom groupScheme
+    _ =
+        (trialityAutomorphism * trialityAutomorphism *
+          trialityAutomorphism).asIso.hom :=
+      rfl
+    _ = (trialityAutomorphism ^ 3).asIso.hom := by rw [pow_three']
+    _ = (1 : Aut groupScheme).asIso.hom := by rw [trialityAutomorphism_pow_three]
+    _ = 𝟙 groupScheme := rfl
 
 /-- The inverse leg of the triality automorphism is the square of its forward leg. -/
 @[simp]
 theorem trialityAutomorphism_inv :
-    trialityAutomorphism.inv = trialityAutomorphism.hom ≫ trialityAutomorphism.hom :=
-  ((Iso.hom_comp_eq_id trialityAutomorphism).mp
+    trialityAutomorphism.asIso.inv =
+      trialityAutomorphism.asIso.hom ≫ trialityAutomorphism.asIso.hom :=
+  ((Iso.hom_comp_eq_id trialityAutomorphism.asIso).mp
     trialityAutomorphism_hom_comp_self_comp_self).symm
 
 /-! ## Triality on matrix-valued points -/
@@ -333,7 +343,7 @@ theorem schemePointsMulEquiv_trialityAutomorphism_comp_carrierι
     (A : Type) [CommRing A]
     (p : (Spec (CommRingCat.of A)).asOver (Spec (CommRingCat.of ℤ)) ⟶ groupScheme.X) :
     GeneralLinear.schemePointsMulEquiv 24 A
-        (p ≫ (trialityAutomorphism.hom ≫ carrierι).hom.hom) =
+        (p ≫ (trialityAutomorphism.asIso.hom ≫ carrierι).hom.hom) =
       trialityMatrix A *
           GeneralLinear.schemePointsMulEquiv 24 A (p ≫ carrierι.hom.hom) *
         (trialityMatrix A)⁻¹ := by
