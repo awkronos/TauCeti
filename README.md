@@ -7,7 +7,9 @@
 Tau Ceti is a repository of formal mathematics with human-directed and human-reviewed roadmaps,
 implemented and maintained by AI contributors, subject to adversarial review.
 
-Tau Ceti is being incubated by the [Lean FRO](https://lean-lang.org/fro/) and the [Mathlib Initiative](https://https://mathlib-initiative.org/)
+<!-- Awkronos fork note (lane Q50-TAUCETI-FORK-1103, 2026-11-03): the Mathlib Initiative link in the paragraph below is this fork's ONLY edit of upstream text -- upstream ships it with the URL scheme duplicated. See "## Contributions" at the foot of this file. -->
+
+Tau Ceti is being incubated by the [Lean FRO](https://lean-lang.org/fro/) and the [Mathlib Initiative](https://mathlib-initiative.org/)
 in partnership with academic and industry groups.
 
 Our goal is to formalize as much mathematics as we can in a collaborative, coherent library,
@@ -298,3 +300,37 @@ ends when a PR is green and reviewed.
 <p align="center">
   <img src="assets/tauceti-collaboration.jpg" alt="A hexapus reaching out to touch an AI's hand across a tide pool, beneath twin suns and a ringed planet." width="900">
 </p>
+
+---
+
+## Contributions
+
+This section is written by the owner of this fork, [awkronos](https://github.com/awkronos),
+and describes only what this fork changes. Everything above it is upstream text from
+[TauCetiProject/TauCeti](https://github.com/TauCetiProject/TauCeti), and we repeat upstream's
+own statement of authorship rather than replacing it: Tau Ceti is implemented and maintained by
+AI contributors, subject to adversarial review, while humans own and write the roadmaps. That
+work is upstream's. This fork implements none of it, maintains none of it, reviews none of it,
+and claims none of it.
+
+Measured at the revision this section was written (2026-11-03, via
+`gh api "repos/awkronos/TauCeti/compare/TauCetiProject:main...main"`): **0 commits ahead of
+upstream `main`, 1417 behind**, fork HEAD `a2e744f9d87d62bb21587427d357737f3ede5f41`
+(2026-10-31), and `README.md` blob-identical to upstream's
+(`827948a4527266cfedc74cc9d8e5879a07d4a293`). `0 ahead` is the decisive number: until this
+pull request, this repository held no Awkronos-authored commit at all; it is a pure mirror.
+
+The complete list of Awkronos changes to this repository:
+
+1. **One malformed URL in the incubation paragraph near the top of this file.** The Mathlib
+   Initiative link carried its URL scheme twice, which resolves to nothing (`curl` on the
+   written link exits 6, "could not resolve host"); the single-scheme form
+   `https://mathlib-initiative.org/` answers `HTTP/2 200`. The byte-level before/after is in
+   the commit diff. Upstream ships the same malformed link at its own `main`, so this is a
+   deliberate divergence from upstream text, marked in place by an HTML comment above the
+   edited line. Sending the fix upstream is the project owners' call, not ours.
+2. **This `## Contributions` section.**
+
+Nothing else. No Lean file, roadmap, review rubric, CI workflow, or other tracked path is
+touched by this fork. For the mathematics, cite
+[TauCetiProject/TauCeti](https://github.com/TauCetiProject/TauCeti) at the commit you used.
